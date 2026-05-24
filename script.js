@@ -21,7 +21,7 @@ let products = [
         title: "Ninjago Green Dragon 128pgs",
         image: "https://static.richfamily.ru/photo/45/71/457140/1.webp",
         price: 100,
-        description: "Яркий конструктор LEGO c детализированными элементами и увлекательным дизайном, который помогает развивать воображение, логику и творческое мышление. Набор включает качественные детали, легко соединяющиеся между собой для комфортной и интересной сборки. Отлично подойдёт для детей и коллекционеров, любящих создавать уникальные модели и игровые сцены.",
+        description: "This vibrant LEGO construction set features detailed elements and an engaging design that helps develop imagination, logic, and creative thinking. It includes high-quality pieces that fit together easily for a comfortable and engaging build.",
     },
     {
         title: "Green ring 16 17 18 19 size",
@@ -45,7 +45,7 @@ let products = [
         title: "Painting by numbers Sunset",
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX1Hxqog0Py_g1CVbL3FSG39b8xZ072HE-dw&s",
         price: 45,
-        description: "",
+        description: "A beautiful paint-by-numbers painting in warm tones. Perfect for art lovers, a gift, or room decor. It depicts a ship sailing into a bright, orange-yellow sunset.",
     },
     {
         title: "Green women`s bag with a golden lock",
@@ -91,13 +91,13 @@ console.table(products)
 let productsContaner = document.querySelector('.catalogue_items')
 
 products.forEach(function(product){
-    productsContaner.innerHTML += `<div class="product_card" onclick="openItemFull(${product.id})">
+    productsContaner.innerHTML += `<div class="product_card" onclick="openItemFull(event,${ product.id})">
                         <img src="${product.image}" alt="puzzle" class="product-card_img">
                         <p class="product-card_title">${product.title}</p>
 
                         <div class="product-card_footer">
                             <p class="product-card_rice">${product.price}$</p>
-                            <button class="product-card_buy">Add to cart</button>
+                            <button class="product-card_buy" onclick="addToBasket(${product.id})">Add to cart</button>
                         </div>
                     </div>`
 })
@@ -122,11 +122,31 @@ itemFullClose.addEventListener("click", function(){
 
 
 
-function openItemFull(id){
+function openItemFull(e, id){
+    if (e.target.classList.contains("product-card_buy")) {
+        return
+    }
     const product = products.find(item => id === item.id)
     itemFull.classList.remove("item-full--closed")
     itemFull.querySelector(".image").src = product.image
     itemFull.querySelector(".item-full__title").innerText = product.title
     itemFull.querySelector(".item-full__desc").innerText = product.description
     itemFull.querySelector(".item-full__price").innerText = product.price + "$"
+}
+
+const basket = document.querySelector(".basket")
+const basketClose = document.querySelector('.basket-close_bt')
+
+basketClose.addEventListener("click", function(){
+    basket.classList.add("basket--closed")
+})
+
+function addToBasket(id){
+    const product = products.find(item => id === item.id)
+    basket.classList.remove("basket--closed")
+    basket.querySelector(".image").src = product.image
+    basket.querySelector(".name").innerText = product.title
+    basket.querySelector(".basket_product_card_price").innerText = product.price + "$"
+    basket.querySelector(".b_price").innerText = product.price + "$"
+    basket.querySelector(".amount").innerText = product.id
 }
