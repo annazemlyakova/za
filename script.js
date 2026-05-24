@@ -21,7 +21,7 @@ let products = [
         title: "Ninjago Green Dragon 128pgs",
         image: "https://static.richfamily.ru/photo/45/71/457140/1.webp",
         price: 100,
-        description: "Яркий конструктор LEGO с детализированными элементами и увлекательным дизайном, который помогает развивать воображение, логику и творческое мышление. Набор включает качественные детали, легко соединяющиеся между собой для комфортной и интересной сборки. Отлично подойдёт для детей и коллекционеров, любящих создавать уникальные модели и игровые сцены.",
+        description: "Яркий конструктор LEGO c детализированными элементами и увлекательным дизайном, который помогает развивать воображение, логику и творческое мышление. Набор включает качественные детали, легко соединяющиеся между собой для комфортной и интересной сборки. Отлично подойдёт для детей и коллекционеров, любящих создавать уникальные модели и игровые сцены.",
     },
     {
         title: "Green ring 16 17 18 19 size",
@@ -54,7 +54,7 @@ let products = [
         description: "Paint-by-numbers sunset painting with warm orange, pink, and golden tones. A calm landscape that creates a relaxing and cozy atmosphere. A great creative kit for enjoyable painting and attention to detail.",
     },
     {
-        title: "Сute dinosaur sticker 20ps",
+        title: "Cute dinosaur sticker 20ps",
         image: "https://papik.pro/uploads/posts/2021-10/1634754624_24-papik-pro-p-zelenie-nakleiki-26.jpg",
         price: 10,
         description: "Cute dinosaur sticker set with 20 pieces featuring fun and colorful cartoon-style dinosaurs. Each sticker has a playful design that makes them perfect for decorating notebooks, laptops, phones, or gift packaging. A great choice for kids and dinosaur lovers who enjoy bright and cheerful accessories.",
@@ -69,7 +69,7 @@ let products = [
         title: "Rubic`s cube Mastermorphix 4x4",
         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQA-gtPH6VqCczujfKg_JJ_kmYCvr0TU9A4g&s",
         price: 35,
-        description: "Mastermorphix 4x4 is a Rubik’s Cube variation in a distorted tetrahedron shape. Its complex geometry makes solving more challenging and engaging. Great for experienced puzzlers, it develops logic and spatial thinking.",
+        description: "Mastermorphix 4x4 is a Rubik`s Cube variation in a distorted tetrahedron shape. Its complex geometry makes solving more challenging and engaging. Great for experienced puzzlers, it develops logic and spatial thinking.",
     },
     {
         title: "Green and gold colored clocks",
@@ -91,7 +91,7 @@ console.table(products)
 let productsContaner = document.querySelector('.catalogue_items')
 
 products.forEach(function(product){
-    productsContaner.innerHTML += `<div class="product_card">
+    productsContaner.innerHTML += `<div class="product_card" onclick="openItemFull(${product.id})">
                         <img src="${product.image}" alt="puzzle" class="product-card_img">
                         <p class="product-card_title">${product.title}</p>
 
@@ -111,3 +111,22 @@ ddBtn.addEventListener("click", (event)=> {
     ddMenu.classList.add("dropdown__menu--active")})
 
 document.body.onclick = ()=> ddMenu.classList.remove("dropdown__menu--active")
+
+
+const itemFull = document.querySelector('.item-full')
+const itemFullClose = document.querySelector('.item-full_close')
+
+itemFullClose.addEventListener("click", function(){
+    itemFull.classList.add("item-full--closed")
+})
+
+
+
+function openItemFull(id){
+    const product = products.find(item => id === item.id)
+    itemFull.classList.remove("item-full--closed")
+    itemFull.querySelector(".image").src = product.image
+    itemFull.querySelector(".item-full__title").innerText = product.title
+    itemFull.querySelector(".item-full__desc").innerText = product.description
+    itemFull.querySelector(".item-full__price").innerText = product.price + "$"
+}
