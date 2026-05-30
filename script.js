@@ -143,10 +143,49 @@ basketClose.addEventListener("click", function(){
 
 function addToBasket(id){
     const product = products.find(item => id === item.id)
-    basket.classList.remove("basket--closed")
-    basket.querySelector(".image").src = product.image
-    basket.querySelector(".name").innerText = product.title
-    basket.querySelector(".basket_product_card_price").innerText = product.price + "$"
-    basket.querySelector(".b_price").innerText = product.price + "$"
-    basket.querySelector(".amount").innerText = product.id
+    console.log(product)
+    basketItems.push(product)
+    localStorage.setItem("basketItems",JSON.stringify(basketItems))
+    }
+
+let basketItems = []
+ function getBasketItems(){
+    if (localStorage.getItem("basketItems")){
+        basketItems = JSON.parse(localStorage.getItem("basketItems"))
+    } else{
+        basketItems = []
+    }
+ }
+getBasketItems()
+let basketItemsCon = document.querySelector(".basket_product_card")
+
+function openBasket(){
+    basket.classList.toggle("basket--closed")
+    basketItemsCon.innerHTML = ""
+    basketItems.map((product)=>{
+        basketItemsCon.innerHTML += `<div class="basket_product_card">
+                    <div class="basket_product_card_img">
+                        <img class="image" src="${product.image}" alt="cub">
+                    </div>
+                    
+                    <div class="basket_product_card_main">
+                        <div class="basket_product_card_text">
+
+                            <h1 class="name">${product.title}</h1>
+                            <p class="basket_product_card_price">${product.price}$</p>
+                        </div>
+                        
+                        <div class="basket_product_card_bts">
+                            <button class="add">+</button>
+                            <button class="delete">&#128465</button>
+                        </div>
+                    </div>
+                </div>`
+    })
+}
+ 
+function removeFromBasket(id){
+    basketItems = basketItems.filter(item => item.id !== id)
+    localStorage.setItem("basketItems", JSON.stringify(basketItems))
+    
 }

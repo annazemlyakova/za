@@ -408,3 +408,23 @@ padding: 0 0.5em;
     border-radius: 15px;
     color: white;
 }
+
+.basket_bt_open{
+    height: 7em;
+    width: 7em;
+    border-radius: 100%;
+    background-color: #006400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 1em;
+    left:1em;
+    border: white solid;
+}
+
+.open {
+    height: 70%;
+
+
+}
